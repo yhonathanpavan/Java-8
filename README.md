@@ -1,5 +1,89 @@
 # Anotações Java 8
 
+## Sumário
+- [Anotações Java 8](#anotações-java-8)
+  - [Sumário](#sumário)
+  - [1 Blocos de Construção do Java](#1-blocos-de-construção-do-java)
+    - [1.1 Classes](#11-classes)
+      - [1.1.1 Estrutura de uma Classe](#111-estrutura-de-uma-classe)
+      - [1.1.2 Variáveis em nível de Classe](#112-variáveis-em-nível-de-classe)
+      - [1.1.3 Ordem dos elementos](#113-ordem-dos-elementos)
+      - [1.1.4 Métodos Construtores](#114-métodos-construtores)
+      - [1.1.5 Blocos inicializadores de instância](#115-blocos-inicializadores-de-instância)
+      - [1.1.6 Ordem de inicialização](#116-ordem-de-inicialização)
+      - [1.1.7 Variáveis do tipo WrapperClass](#117-variáveis-do-tipo-wrapperclass)
+    - [1.2 Classes x Arquivos](#12-classes-x-arquivos)
+    - [1.3 Comentários](#13-comentários)
+    - [1.4 Executando código com o método main()](#14-executando-código-com-o-método-main)
+    - [1.5 Importar pacotes de Classes](#15-importar-pacotes-de-classes)
+      - [1.5.1 Wildcards](#151-wildcards)
+      - [1.5.2 Conflitos de Nome](#152-conflitos-de-nome)
+      - [1.5.3 Criando e Compilando novos Pacotes](#153-criando-e-compilando-novos-pacotes)
+    - [1.6 Objetos](#16-objetos)
+    - [1.7 Tipos primitivos](#17-tipos-primitivos)
+      - [1.7.1 Uso do underline ( \_ ) para melhorar a leitura de números](#171-uso-do-underline--_--para-melhorar-a-leitura-de-números)
+      - [1.7.2 Ecrevendo números Binários | Octal | HexaDecimal](#172-ecrevendo-números-binários--octal--hexadecimal)
+    - [1.8 Variáveis](#18-variáveis)
+      - [1.8.1 Declarando Múltiplas Variáveis](#181-declarando-múltiplas-variáveis)
+      - [1.8.2 Identificadores](#182-identificadores)
+      - [1.8.3 Escopo de variáveis](#183-escopo-de-variáveis)
+    - [1.9 Garbage Collector](#19-garbage-collector)
+  - [2 Operadores e Instruções do Java](#2-operadores-e-instruções-do-java)
+    - [2.1 Entendendo os operadores](#21-entendendo-os-operadores)
+      - [⚠️ 2.1.1 Diferença entre operadores lógicos e operadores lógicos de curto circuito (short-circuit)](#️-211-diferença-entre-operadores-lógicos-e-operadores-lógicos-de-curto-circuito-short-circuit)
+      - [⚠️ 2.1.2 Operadores de incremento e decremento](#️-212-operadores-de-incremento-e-decremento)
+      - [⚠️ 2.1.3 Overflow e Underflow](#️-213-overflow-e-underflow)
+      - [⚠️ 2.1.4 Diferença entre operadores de igualdade .equals() e ==](#️-214-diferença-entre-operadores-de-igualdade-equals-e-)
+    - [2.2 Promoção Numérica](#22-promoção-numérica)
+    - [2.3 Comando Switch](#23-comando-switch)
+    - [2.4 Controle de Fluxo Avançado](#24-controle-de-fluxo-avançado)
+      - [2.4.1 Incluindo de Labels opcionais](#241-incluindo-de-labels-opcionais)
+  - [3 Core Java API](#3-core-java-api)
+    - [3.1 Classe String](#31-classe-string)
+      - [3.1.1 Pool de Strings](#311-pool-de-strings)
+      - [3.1.2 String Literal vs Objeto String](#312-string-literal-vs-objeto-string)
+    - [3.2 StringBuilder](#32-stringbuilder)
+      - [3.2.1 StringBuffer](#321-stringbuffer)
+      - [3.2.2 String vs StringBuilder vs StringBuffer](#322-string-vs-stringbuilder-vs-stringbuffer)
+    - [3.3 Array](#33-array)
+      - [3.3.1 Formas de declarar um Array:](#331-formas-de-declarar-um-array)
+      - [3.3.2 Formas de declarar um Array com *VarArgs*:](#332-formas-de-declarar-um-array-com-varargs)
+      - [3.3.3 Formas de inicializar um Array:](#333-formas-de-inicializar-um-array)
+      - [3.3.4 Propriedade Length:](#334-propriedade-length)
+      - [3.3.5 Ordenação de Arrays:](#335-ordenação-de-arrays)
+      - [3.3.6 Busca em Arrays com binarySearch():](#336-busca-em-arrays-com-binarysearch)
+    - [3.4 Matriz (Arrays multidimensionais)](#34-matriz-arrays-multidimensionais)
+      - [3.4.1 Formas de declarar um Array Multidimensional:](#341-formas-de-declarar-um-array-multidimensional)
+      - [3.4.2 Formas de inicializar um Array:](#342-formas-de-inicializar-um-array)
+    - [3.5 ArrayList](#35-arraylist)
+      - [3.5.1 Formas de declarar um ArrayList:](#351-formas-de-declarar-um-arraylist)
+      - [3.5.2 Ordenar um ArrayList:](#352-ordenar-um-arraylist)
+      - [3.5.3 Conversão Array \& List:](#353-conversão-array--list)
+    - [3.6 Datas e Horas com LocalDate, LocalTime e LocalDateTime](#36-datas-e-horas-com-localdate-localtime-e-localdatetime)
+      - [3.6.1 Tabela de métodos permitidos em cada tipo](#361-tabela-de-métodos-permitidos-em-cada-tipo)
+      - [3.6.2 Utilizando java.time.Period para manipulação de datas](#362-utilizando-javatimeperiod-para-manipulação-de-datas)
+  - [4 Métodos e Encapsulamento](#4-métodos-e-encapsulamento)
+    - [4.1 Design de Métodos](#41-design-de-métodos)
+    - [4.2 Constantes e Membros Estáticos](#42-constantes-e-membros-estáticos)
+      - [4.2.1 Modificador final](#421-modificador-final)
+      - [4.2.2 Modificador static](#422-modificador-static)
+    - [4.3 Parâmetros e Retorno de Métodos](#43-parâmetros-e-retorno-de-métodos)
+    - [4.4 Sobrecarga de Métodos (*overload*)](#44-sobrecarga-de-métodos-overload)
+    - [4.4 Sobrescrita de Métodos (*override*)](#44-sobrescrita-de-métodos-override)
+    - [4.5 Classes e Métodos abstratos (*abstract*)](#45-classes-e-métodos-abstratos-abstract)
+    - [4.6 Interfaces](#46-interfaces)
+      - [4.6.1 Herança de Interfaces](#461-herança-de-interfaces)
+      - [4.6.2 Atributos de Inteface](#462-atributos-de-inteface)
+      - [4.6.2 Métodos default](#462-métodos-default)
+      - [4.6.3 Métodos estáticos (``static``)](#463-métodos-estáticos-static)
+    - [4.7 Polimorfismo](#47-polimorfismo)
+  - [5 Exceções (*Exceptions*)](#5-exceções-exceptions)
+    - [5.1 Try | Catch | Finally](#51-try--catch--finally)
+      - [5.1.1 Multicach](#511-multicach)
+    - [5.2 Runtime Exceptions cobradas - (*Unchecked Exceptions*)](#52-runtime-exceptions-cobradas---unchecked-exceptions)
+    - [5.2 Exceptions cobradas - (*Checked Exceptions*)](#52-exceptions-cobradas---checked-exceptions)
+  - [6 Manipulação de arquivos](#6-manipulação-de-arquivos)
+    - [6.1 A classe java.io.File](#61-a-classe-javaiofile)
 ---
 ## 1 Blocos de Construção do Java
 ---
@@ -343,6 +427,27 @@ public class InitOrder {
 }
 
 ```
+
+#### 1.1.7 Variáveis do tipo WrapperClass
+Os Wrapper são conhecidos na linguagem Java como classes especiais que possuem métodos capazes de fazer conversões em variáveis primitivas e também de encapsular tipos primitivos para serem trabalhados como objetos, ou seja, é feita um embrulho de streams que são fluxo de dados através de canais.
+Sendo assim, existe uma classe Wrapper para cada tipo primitivo identificado pelo mesmo nome do tipo que possui e tendo a primeira letra maiúscula.
+
+| Tipo Primitivo | _Wrapper Class_ | Exemplo de Criação                             |
+|:---------------|:----------------|:-----------------------------------------------|
+| boolean        | Boolean         | `new Boolean(true)` <br> `new Boolean("TrUe")` | 
+| byte           | Byte            | `new Byte((byte) 1)` <br> `new Byte("1")`      | 
+| short          | Short           | `new Short((short) 1)` <br> `new Short("1")`   | 
+| int            | Integer         | `new Integer(1)` <br> `new Integer("1")`       | 
+| long           | Long            | `new Long(1)` <br> `new Long("1")`             | 
+| float          | Float           | `new Float(1.0)` <br> `new Float("1.0")`       |
+| double         | Double          | `new Double(1.0)` <br> `ew Double("1.0")`      |
+| char           | Character       | `new Character('c')`                           |
+
+**Métodos ``valueOf()``, ``decode()`` e ``parse()``**
+Todas as WrapperClasses apresentadas (com exceção do ``Character``) possuem métodos de conversão de ``String`` para tipo primitivo e *WrapperClass*. São Eles:
+- **``Type.parseType("...")``** Converte a string para um tipo primitivo, onde a palavra `Type` deve ser substituida pelo tipo desejado. Exemplo: ``int myPrimitiveInt = Integer.parseInt("1");``
+- **``Type.valueOf("...")``** Converte a string para um tipo *Wrapper*, onde a palavra `Type` deve ser substituida pelo tipo desejado. Exemplo: ``Integer myWrapperInt = Integer.valueOf("1");``
+- **``Type.decode("...")``** Assim como o ``valueOf()`` o método ``decode()`` Converte a string para um tipo *Wrapper*, onde a palavra `Type` deve ser substituida pelo tipo desejado. A sia principal diferença, é que o tipo decode() usa Strings **decimais**, **hexadecimais** ou **octais** (prefixados por ``0x``, ou ``0``) Exemplo: ``Integer myWrapperInt = Integer.valueOf("0xf"); // Amazenará o valor 16 como Integer``
 ---
 
 ### 1.2 Classes x Arquivos
@@ -611,7 +716,7 @@ Exemplo com o byte, ele tem 8 bits, portanto 2⁸ = 256. Dividindo 256 pela meta
 | double  | 64 bits |                 até 16 dígitos decimais com terminação em "D"                  | 24.25D ou 24.25d |
 
 #### 1.7.1 Uso do underline ( _ ) para melhorar a leitura de números
-A partir do Java 7, foi adicionado o suporte ao o uso do uderline ( _ ) na atribuição de variáveis que armazenam tipos númericos.
+A partir do Java 7, foi adicionado o suporte ao o uso do uderline ( _ ) na atribuição de variáveis que armazenam tipos númericos. 
 **Exemplo:** ✅
 ```java
   { 
@@ -626,8 +731,10 @@ Mas tenha cuidado, pois há formas incorretas de fazer a utilização do underli
     //Exemplos que NÃO COMPILAM
     int wrongMillion = _1000000; //❌ Não pode começar com _
     int wrongMillion2 = 1000000_; //❌ Não pode terminar com _
-    float wrongMillion3 = 1000000_.00; //❌ Não pode ter _ antes do .
-    float wrongMillion4 = 1000000._00; //❌ Não pode ter _ depois do .
+    long wrongMillion4 = 10000_l; //❌ Não pode ter _ antes sufixo 'l' .
+    float wrongMillion3 = 1000000_.00f; //❌ Não pode ter _ antes do .
+    float wrongMillion4 = 1000000._00f; //❌ Não pode ter _ depois do .
+    float wrongMillion4 = 1000000.00_f; //❌ Não pode ter _ antes sufixo 'f' .
   }
 ```
 #### 1.7.2 Ecrevendo números Binários | Octal | HexaDecimal
@@ -645,9 +752,11 @@ Quando faço uma atribulção começando por `0b`, isso significa que irei traba
 Octal é um sistema numérico de base 8, então significa que o dígito pode ser de ``0`` a ``7``, você não pode usar o dígito 8 (e 9 também) no sistema numérico octal. Para isso, realizamos a atribuição começando pelo número ``0``.
 ```java
   { 
-    System.out.println(07); // ✅ Output: 7
+    System.out.println(07);  // ✅ Output: 7
     System.out.println(010); // ✅ Output: 8
     System.out.println(011); // ✅ Output: 9
+    System.out.println(020); // ✅ Output: 16
+
     System.out.println(08); // ❌ Err: integer number too large (passou do range permitido)
     System.out.println(018); // ❌ Err: integer number too large (passou do range permitido)
   }
@@ -656,9 +765,9 @@ Octal é um sistema numérico de base 8, então significa que o dígito pode ser
 A declaração hexaDecimal começa com ``0X`` ou ``0x`` e os caracteres possíveis são ``[0-9A-Fa-f]``
 ```java
   { 
-    System.out.println(0xf); // Output: 15
-    System.out.println(0x10); // Output: 16
-    System.out.println(0xg); // ❌ Err: Hexadecimal numbers must contain at least one hexadecimal digit
+    System.out.println(0xf);  // ✅ Output: 15
+    System.out.println(0x10); // ✅  Output: 16
+    System.out.println(0xg);   // ❌ Err: Hexadecimal numbers must contain at least one hexadecimal digit
     System.out.println(0x10j); // ❌ Err: Hexadecimal numbers must contain at least one hexadecimal digit
   }
 ```
@@ -726,21 +835,100 @@ As variáveis sempre estão atreladas a um escopo. Seja um escopo de instância,
 - Variáveis de Instância: da declaração até o objeto ser coletado.
 - Variáveis Locais: escopo desde a declaração até o fim do bloco.
 ```java
-public class VariableScope {
+public class ScopesExample {
 
     static String classScope; //Variável de escopo de classe. (Ela não depende de instância).
     
     Boolean isIstanceScope = true; //Escopo de instância.
     
-    public void myMethod(String paramScope) { //É uma variável que apesar de ser um parâmetro, está dentro do escopo local do método.
+    public void myMethod(String paramScope) { //⚠️ É uma variável que apesar de ser um parâmetro, está dentro do escopo local do método.
         String myVarMethodScope; //Escopo local
+        String paramScope; //❌ Ocasionaria um erro de compilação, pois já foi definida!
+    }
+}
+```
+
+**Atenção!!! Cuidado com a ordem em que vai declarar suas variáveis!** Se você declara sua variável em um escopo externo, e internamente há um outro escopo onde você tenta declarar uma outra variável com o mesmo nome, um ERRO de compilação irá acontecer! O oposto é permitido, onde você declara uma variável no bloco interno e declara uma com o mesmo nome no bloco externo. Isso ocorre porque declarando primeiro no bloco interno, a variável se limita à aquele escopo.
+```java
+public class WrongBlockScopeExample {
+    
+    public void myWrongMethod(String paramScope) { 
+      int myNum = 0;
+      {
+        int myNum = 10; //❌ Erro de compilação! O escopo interno valida variáveis declaras no escopo externo e faz reuso delas. Portanto, é interpretado como se essa variável já estivesse sido declarada!
+      }
+
+      //O mesmo acontece com for
+      int i = 0;
+      for (int i = 0; i < 10; i++) { //❌ Erro de compilação! O escopo interno valida variáveis declaras no escopo externo e faz reuso delas. Portanto, é interpretado como se essa variável já estivesse sido declarada!
+            
+      }
+
+      //O mesmo acontece com If
+      String teste = "teste do escopo";
+      if (true) { 
+          String teste = "teste de outro escopo?" //❌ Erro de compilação! O escopo interno valida variáveis declaras no escopo externo e faz reuso delas. Portanto, é interpretado como se essa variável já estivesse sido declarada!
+      }
+    }
+}
+```
+Essa regra não se aplica para declarações em escopo de classe para métodos.
+```java
+public class CorrectBlockScopeExample {
+
+    //Escopo de classe (estático) para métodos 
+    static int x = 1; //✅ 
+
+    static {
+        int x = 1; //✅ 
+    }
+    
+    public static void staticTest(){
+        int x = 0; //✅ 
+    }
+
+    //Escopo de classe para métodos 
+    int y = 1; //✅ 
+
+    {
+        int y = 1; //✅ 
+    }
+
+    public void test(){
+        int y = 0; //✅ 
+    }
+
+    //Exemplos corretos dentro do próprio método.
+    public void myCorrectMethod(String paramScope) { 
+      
+      {
+        int myNum = 10; //✅ Essa variável não foi declarada antes, no escopo maior. Portanto, é única e exclusiva dentro deste escopo interno.
+      }
+      int myNum = 0; //✅ Essa variável não foi declarada no escopo externo, então pode ser declara após o bloco.
+
+      //O mesmo acontece com For    
+      for (int i = 0; i < 10; i++) { ///✅ Essa variável não foi declarada antes, no escopo maior. Portanto, é única e exclusiva dentro deste escopo interno.
+            
+      }
+      int i = 0; //✅ Essa variável não foi declarada no escopo externo, então pode ser declara após o bloco.
+
+      //O mesmo acontece com If
+      if (true) { 
+          String teste = "escopo interno" //✅ Essa variável não foi declarada antes, no escopo maior. Portanto, é única e exclusiva dentro deste escopo interno.
+      }
+      String teste = "teste do escopo"; //✅ Essa variável não foi declarada no escopo externo, então pode ser declara após o bloco.
     }
 }
 ```
 ---
 
 ### 1.9 Garbage Collector
-_Garbage Collector_ (GC) é uma forma de realizar o gerenciamento automático de memória. Podemos dizer, que é um processo capaz de localizar objetos utilizados (ou não) na memória heap, remover os objetos não utilizados e compactá-los após a liberação de espaço. Muitas implementações de um Garbage Collector, possuem as seguintes operações básicas descritas a seguir:
+_Garbage Collector_ (GC) é uma forma de realizar o gerenciamento automático de memória. Podemos dizer, que é um processo capaz de localizar objetos utilizados (ou não) na memória heap, remover os objetos não utilizados e compactá-los após a liberação de espaço. 
+**Um objeto é elegível para o GarbageCollector quanto ocorre uma das duas situações:**
+ - O objeto não possui mais referências apontando pra ele.
+ - Todas as referências ao objeto saíram do escopo.
+
+Muitas implementações de um Garbage Collector, possuem as seguintes operações básicas descritas a seguir:
 - Alocação de memória do objeto;
 - Buscar objetos em uso (Mark);
 - Liberar objetos que não estão em uso (Sweep);
@@ -818,7 +1006,7 @@ Existe apenas um caso de curto-circuito para cada operador, e são eles:
 
 Em suma, um curto-circuito acontece porque o resultado fica claro antes mesmo da avaliação completa da expressão, e o resultado é retornado. A avaliação de curto-circuito evita trabalho desnecessário e leva a um processamento eficiente.
 
-#### ⚠️ 2.1.2 Diferença entre operadores lógicos e operadores lógicos de curto circuito (short-circuit)
+#### ⚠️ 2.1.2 Operadores de incremento e decremento
 Os operadores de incremento e decremento são operadores unários usados para adicionar ou subtrair 1 do valor de uma variável numérica. O operador de incremento é simbolizado por **++**, e o de decremento, por **--**
 Exemplo:
 ```java
@@ -864,7 +1052,7 @@ short y = (short) 1921222; //O valor atribuido será 20678
 // e o short suporta até 16bits, pegando somente os primeiros 16 bits: 0101000011000110
 // Se o número fosse negativo, haveria uma inversão nos valores:       1010111100111010
 ```
-**Exemplo de casting com Compound assignment operator**:
+**Exemplo de casting automático com Compound assignment operator**:
 ```java
 //Outro exemplo interessante, é com o uso de Compount assignment operator, onde este realiza o casting automaticamente.
 long x = 10;
@@ -1090,6 +1278,15 @@ Algumas características:
         s2.concat("3"); //O valor de s2 não foi alterado, e o resultado desta operação não foi atribuido a nenhuma variável.
         System.out.println(s2); // Resultado: 12
       ``` 
+    - Exemplo 02 (Quantas Strings foram criadas?):
+      ```java
+        String s1 = "MyString"; // 01 - "MyString"
+        s1.concat("123"); // 02 - "123" | 03 - "MyString123"
+        s1.toLowerCase(); // 04 - "mystring"
+        //Fique atento! Foram criadas 4 Strings! Apesar de tudo, originalmente nossa s1 se manteve a mesma.
+
+        System.out.println(s1); //Output: "MyString" - Porque ela é imutável - 
+      ``` 
 - Se um dos operantes anteriores a uma string for um '+' ocorrerá uma concatenação, avaliada da esquerda para a direita.
     - Exemplo:
       ```java
@@ -1121,6 +1318,7 @@ Exemplo:
 
 **Características StringBuilder:**
 - Armazena caracteres especificados pela sua capacidade, caso ela seja excedida, é aumentada para acomodar os caracteres adicionais;
+- Quando não é especificado um tamanho inicial (``new StringBuilder(10)``) o StringBuilder aloca ``<tamanho da sua String> + 16``. Exemplo: new ``StringBuilder("ABC")`` possui 16 + 3 (3 do ABC) de tamanho alocado. Podemos verificar isso com o método ``capacity()``. Caso queira diminuir o valor alocado para o tamanho correto da string, pode ser usado o método ``trimToSize()``, que a partir disso seu StringBuilder passará a ter tamanho 3. 
 - Não precisa alocar novos objetos quando realiza uma concatenação;
 - Não são sincronizadas;
 - Não são seguras para threads;
@@ -1161,7 +1359,28 @@ Há algumas diferenças entre essas três classes, são elas:
 
 ---
 ### 3.3 Array
-*Arrays* são usados para armazenar vários valores em uma única variável, em vez de declarar variáveis ​​separadas para cada valor.
+*Arrays* são usados para armazenar vários valores em uma única variável, em vez de declarar variáveis ​​separadas para cada valor. **⚠️ Atenção! Apesar de um array poder ser declarado com tipo primitivo em seus valores internos, o array como um todo é tratado como referência.** 
+**Exemplo:**
+```java
+public class ArrayScopeTest {
+
+    public static void main(String[] args) {
+        int myArr[] = {1, 2, 3};
+        change(myArr[2]); //✅ Passo uma cópia do valor primitivo para o método (Não sofre alteração)
+        change(myArr);    //⚠️ Passo a referência do array para o método (sofre alteração simultânea)
+        System.out.println(myArr[1]+myArr[2]); // Output: 3
+    }
+
+    public static void change(int x){
+        x = 1; // Altera a variável 'x' de dentro do escopo do método apenas.
+    }
+
+    public static void change(int[] x){
+        x[1] = 0; // Altera o valor real do Array, pois recebeu uma referência ao meu objeto array como parâmetro.
+    }
+
+}
+```
 
 #### 3.3.1 Formas de declarar um Array:
 ```java
@@ -1231,6 +1450,13 @@ Exemplo:
 
   Obejct[] myNumberArrayAsObject = myNumberList.toArray(); // ✅ O método toArray() retorna um Object[];
   Integer[] myNumberArray = myNumberList.toArray(new Integer[0]); // ✅ Passo como parâmetro 'new <tipo>[0]' se eu quiser obter uma cópia exata do que tem na minha lista de tipo específico, pois somente o método toArray() retorna o tipo Object.
+``` 
+**⚠️ Atenção! Eu só posso atribuir os valores a um array utilizando chaves ``{}`` no momento de sua declaração. Tentar atribuir esses valores posteriormente causará um erro de compilação!**
+```java
+  int[][] numbers = new int[3][2]; // ✅ Iniciei minha matriz
+  numbers[0] = new int[3]; // ✅ Inicializo a primeira posição com um novo array
+  numbers[1] = {1, 2, 3} // ❌ NÃO COMPILA! Só posso inicializar com chaves '{}' na hora em que crio minha variável;
+
 ``` 
 #### 3.3.4 Propriedade Length:
 As vezes recebemos uma array como argumento e precisamos saber o tamanho, para isso usamos array.length.
@@ -1391,19 +1617,6 @@ Diferente do ``array[]`` que utilizamos ``Arrays.sort()`` para ordenar, no Array
   myListOfStrings.forEach(System.out::println); // 1 2 5
 ```
 
-#### 3.5.2 Ordenar um ArrayList:
-Diferente do ``array[]`` que utilizamos ``Arrays.sort()`` para ordenar, no ArrayList ou qualquer outra Collection nós utilizamos ``Collections.sort()`` também de ``java.util``.
-```java
-  List<Integer> myListOfNumbers = new ArrayList<>(); //Declarando como List (interface) e instânciando a implementação (ArrayList) e deixando o tipo interno como String;
-  myListOfNumbers.add(5);
-  myListOfNumbers.add(1);
-  myListOfNumbers.add(2);
-
-  Collections.sort(myListOfStrings); //Realizo a ordenação da minha lista
-
-  myListOfStrings.forEach(System.out::println); // 1 2 5
-```
-
 #### 3.5.3 Conversão Array & List:
 A conversão de List para Array pode ser feita através do método ``toArray()`` de um ArrayList e a conversão de Array para List pode ser feita através do método ``Arrays.asList()``. Porém, a conversão gera uma lista e um array de tamanho fixo!
 ```java
@@ -1545,6 +1758,45 @@ Exemplo:
   void public myMethod6(){}  // ❌ Não compila! O tipo do método DEVE vir antes do nome do método.
 ```
 
+**Atenção ao uso de** ``protected``:
+```java
+package samePackageTest;
+
+public class A{
+  protected String name; 
+}
+```
+```java
+package samePackageTest;
+
+public class B{
+  {
+    System.out.println(new A().name); //✅ Compila! Possui acesso à propriedade, pois estão no mesmo pacote.
+  }
+}
+```
+```java
+package samePackageTest;
+
+public class A2 extends A{
+  {
+    System.out.println(new A().name);  //✅ Compila! Possui acesso à propriedade, pois estão no mesmo pacote.
+    System.out.println(new A2().name); //✅ Compila! Possui acesso à propriedade, pois herdou da classe pai.
+  }
+}
+```
+```java
+package differentPackageTest;
+
+public class A3 extends A{ 
+  {
+    System.out.println(new A().name); //❌ Não compila! É visível apenas para subclasses OU para classes do mesmo pacote (não é o caso). 'name' has protected access in 'samePackageTest.A'
+    System.out.println(new A2().name); //✅ Compila! Classe filha herdou a propriedade.
+  }
+}
+```
+
+
 
 **⚠️ Especificadores opcionais** (Somente os que estão em negrito são cobrados na prova);
 - **static** (Métodos estáticos são métodos de Classe);
@@ -1643,7 +1895,8 @@ Suponha que você tenha uma classe chamada `MathUtils` com vários membros está
     }
 
   ```
-- **Classes:** As classes estáticas são classes que são declaradas dentro de outra classe, mas são marcadas com o modificador static. Elas são usadas principalmente para fins de organização, encapsulamento e para evitar a necessidade de criar uma instância da classe externa para acessá-las.
+- **Classes:** As classes estáticas são classes que são declaradas dentro de outra classe, mas são marcadas com o modificador static. Elas são usadas principalmente para fins de organização, encapsulamento e para evitar a necessidade de criar uma instância da classe externa para acessá-las. **Essas classes estáticas aninhadas têm uma propriedade interessante: embora estejam dentro de outra classe, elas não têm acesso aos membros não estáticos (membros de instância) da classe envolvente. Isso significa que não podem acessar diretamente os campos ou métodos não estáticos da classe externa (exceto por meio de uma instância da classe externa).**
+
   ```java
   public class OuterClass {
     private static int outerField = 10;
@@ -1770,6 +2023,9 @@ Exemplo
   ---
 ### 4.4 Sobrecarga de Métodos (*overload*)
 A sobrecarga de método em Java permite que você defina vários métodos com o mesmo nome em uma classe, desde que tenham diferentes listas de parâmetros. Fique atento, pois você não pode criar dois métodos com a mesma assinatura e nomes de parâmetro, mesmo que os tipos de retorno sejam diferentes!
+**Regras:**
+ - Ao sobrecarregar um método, **DEVEMOS** alterar a lista de argumentos (parâmetros).
+ - É **OPCIONAL** alterar o tipo do retorno ou o nível de acesso.
 ```java
   public class OverloadMethods {
     public void myMethod(int numMiles){}  // ✅
@@ -2087,8 +2343,9 @@ A abstração de dados é o processo de ocultar certos detalhes e mostrar apenas
 ### 4.6 Interfaces
 A ``interface`` é um recurso muito utilizado em Java, bem como na maioria das linguagens orientadas a objeto, para “obrigar” a um determinado grupo de classes a ter métodos ou propriedades em comum para existir em um determinado contexto, contudo os métodos podem ser implementados em cada classe de uma maneira diferente.
 Definindo uma interface:
-- Interfaces não podem ser instanciadas diretamente. ( ❌ ``new MyInterface()``);
+- Interfaces não podem ser instanciadas diretamente. ( ❌ ``new MyInterface()``) (✅ Mas podem ser implementadas em tempo de execução, sobreescrevendo seus métodos não ``default`` e ``static`` como ``new MyInterface(){}``);
 - Não é obrigatório ter métodos;
+- Interfaces não herdam de ``Object``, elas são ``Object`` diretamente, e portanto não podem ter seus métodos sobrescritos (tais como ``toString()`` ``equals()`` etc.).
 - Não pode ser marcada como final (porque por padrão ela é abstract);
 - Todas têm acesso ``public`` ou ``default`` e são ``abstract``. Modificadores diferente disso, ocasionam erro de compilação.
 - Todos os MÉTODOS que não são ``default``, são ``public`` e ``abstract`` por definição;
@@ -2278,3 +2535,480 @@ Exemplo:
     }
   }
 ```
+---
+### 4.7 Polimorfismo
+O termo polimorfismo se refere à capacidade de um objeto assumir diferentes formas, ou seja, uma mesma operação pode ser realizada por diferentes objetos de classes diferentes.
+**Em Java, o polimorfismo é implementado através do uso de herança e interfaces**. 
+Regras de seu funcionamento:
+- O tipo do objeto determina quais propriedades existem dentro do objeto em memória. Tipo do objeto é o que vem depois do ``=``. Exemplo: O tipo do objeto em ``A aa = new B()`` é ``B``.
+- O tipo da referência ao objeto determina quais métodos e variáveis estão acessíveis ao programa Java. Tipo da referência é o que vem antes do ``=``. Exemplo: O tipo da referência em ``A aa = new B()`` é ``A``.
+
+Exemplo com Objeto:
+```java
+public class PolymorphismObject {
+
+    public static void main(String[] args) {
+        A a = new B();
+        a.calc(10, 10); // ✅ Chamou pai : Classe filha não possui uma sobreescrita, será chamada a classe pai
+        a.calc(10.0, 10.0); // ✅ Chamou filha : Classe filha possui uma sobreescrita, ela será chamada
+        a.concatNameAndLastName("Java", "8"); // ❌ Não compila! Respeitando as regras mencionada sobre polimorfismo, o Objeto A não tem acesso aos membros exclusivos do Objeto B, por isso um erro é esperado. Err: a Cannot resolve method 'concatNameAndLastName' in 'A
+    }
+}
+
+class A {
+    public int calc(int a, int b) {
+        System.out.println("Chamou pai");
+        return a + b;
+    }
+
+    public double calc(double a, double b) {
+        System.out.println("Chamou pai");
+        return a + b;
+    }
+}
+class B extends A {
+    public double calc(double a, double b) {
+        System.out.println("Chamou filha");
+        return a * b;
+    }
+
+    public String concatNameAndLastName(String name, String lastName) {
+        System.out.println("Chamou filha");
+        return name + " " + lastName;
+    }
+}
+```
+
+Exemplo simples de polimorfismo com Interface:
+
+```java
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class PolymorphismInterfaceExample {
+
+    public static void main(String[] args) {
+        List<String> myStringList; // Declaro minha variavel com a interface List
+        myStringList = new ArrayList<>(); // Atribuo a minha List uma implementação de ArrayList.
+        myStringList.add("I added this item with an arrayList");
+        myStringList = new LinkedList<>(); // Atribuo a minha List uma implementação de LinkedList.
+        myStringList.add("Now I added this item with a linkedList");
+
+      /*
+        Repare que eu pude manipular os dados com dois tipos de objetos diferente ao decorrer do programa.
+        Iniciei com um ArrayList e finalizei com LinkedList. Isso é possível graças ao
+        polimorfismo de interfaces. O método add() de List é implementado por ambas as classes, e portanto, 
+        pude fazer o seu uso no meu programa. Cada uma poderia ter uma tratativa ou formas diferentes de implementar o método add(),
+        tornando mais flexível e interessante a forma de manipular propriedades dos objetos.
+      */
+    }
+}
+```
+
+Exemplo com pegadinha em polimorfismo de interface:
+```java
+interface Noturno {
+    default boolean ehCego() { 
+      return true; 
+    }
+}
+
+public class Coruja implements Noturno {
+
+    private int idade = 10;
+    public boolean ehCego() { 
+      return false; 
+    }
+
+    public static void main(String[] args) {
+        //⚠️ ATENÇÂO! Apesar de haver um comportamento predefinido na interface, a sobrescrita na implementação possui maior prioridade na execução. 
+        Noturno noturno = (Noturno) new Coruja(); // Fiz um casting de Noturno, mas estou usando a instância de Coruja. Portanto, o comportamento será da implementação (Coruja). Atenção! O Casting de Noturno nesse caso é interpretado como "desnecessário" pelo Java, pois Coruja é Noturno.
+        System.out.println(noturno.ehCego()); // false
+        System.out.println(noturno.idade); // ❌ Não compila! Noturno não possui o atributo idade. Err: Cannot resolve symbol 'idade'
+        System.out.println(((Coruja) noturno).idade); // 10 - Para acessar o atributo 'idade' foi preciso fazer um casting do tipo noturno,e posteriormente fazer a chamada.
+    }
+}
+}
+```
+
+---
+## 5 Exceções (*Exceptions*)
+---
+Exceções são situações excepcionais e geralmente indesejáveis que podem ocorrer durante a execução de um programa. 
+**Quais são as exceções Java?**
+Existem três tipos de exceções em Java: 
+- ***Unchecked Exceptions*** são exceções que não precisam ser obrigatoriamente tratadas dentro do nosso código. Elas são chamadas de "*unchecked*" (não checadas) porque o compilador não as verifica em tempo de compilação. Isso significa que o programador não é obrigado a usar o comando "``throws``" ou "``try-catch``" para tratar esse tipo de exceção. 
+- ***Checked Exceptions*** são exceções que precisam ser tratadas obrigatoriamente pelo programador. Elas são chamadas de "*checked*" (checadas) porque o compilador verifica se essas exceções foram tratadas com o uso de ``try-catch`` ou se foram lançadas novamente usando o comando "``throws``" na assinatura do método.
+- ***Error*** são erros que indicam situações anormais que nunca deveriam acontecer. Um *Error* é gerado quando ocorre um problema sério. Além disso, os *Errors* são considerados exceções não verificadas e os aplicativos não devem tentar capturá-los e tratá-los . Além disso, os erros acontecem em tempo de execução e não podem ser recuperados. É importante ressaltar que eles representam problemas na **máquina virtual** (JVM) e não devem ser tratados em 99% dos casos, já que provavelmente o melhor a se fazer é deixar a JVM encerrar (ou apenas a Thread em questão).
+```mermaid
+classDiagram
+      Object <|-- Throwable
+      note for Object "java.lang.Object"
+
+      Throwable <|-- Error
+      note for Throwable "java.lang.Throwable"
+      note for Error "java.lang.Error"
+
+
+      Throwable <|-- Exception
+      note for Exception "java.lang.Exception"
+
+      Exception <|-- RuntimeException
+      note for RuntimeException "java.lang.RuntimeException"
+    
+```
+Como identificar os tipos de exceções:
+
+| Tipo                      | Como Reconhecer                                | Pode ser capturada pelo programa? | Obrigatório tratar ou declarar? |
+|:--------------------------|:-----------------------------------------------|:---------------------------------:|:-------------------------------:|
+| _**Checked Exception**_   | Subclasse de ``Exception`` ou ele mesmo        |                 ✅                 |                ✅                |
+| _**Unchecked Exception**_ | Subclasse de ``RuntimeException`` ou ele mesmo |                 ✅                 |                ❌                |
+| _**Error**_               | Subclasse de ``Error`` ou ele mesmo            |                 ❌                 |                ❌                |
+
+---
+### 5.1 Try | Catch | Finally
+Em Java, realizamos o tratamento de exceções por meio das estruturas ``try``, ``catch`` e ``finally``.
+Atente-se as regras:
+- Quando declarado um ``try``, é esperado obrigatóriamente o uso de chaves ``{}``;
+  ```java
+  try // ❌ Não compila! Faltou inserir as chaves '{}', que são obrigatórias. 
+    anyMethod();
+  catch(Exception e)
+    System.out.println("never get here");
+  ```
+- Havendo um ``try``, é obrigatório ter na sequência pelo menos um ``catch`` ou um ``finally``. Havendo unicamente um ``try`` resulta em um erro de compilação;
+  ```java
+  try{ // ❌ Não compila! Havendo um 'try', é obrigatório a declaração de um catch ou finally 
+    anyMethod();
+  }
+  ```
+- Pode ser declarado mais de um ``catch``, mas NUNCA mais de um ``finally`` para a mesma estrutura;
+  ```java
+  try{
+    anyMethod();
+  }finally {
+    System.out.println("run finally");
+  }finally { // ❌ Não compila! Não podem haver mais de um 'finally'. Err: 'finally' without 'try'
+    System.out.println("never get here");
+  }
+  ```
+- Um ``finally`` não pode vir antes de um ``catch``, porque ele "encerra" a declaração ``try-catch`` e os ``catchs`` seguintes serão interpretados como códigos isolados, causando um erro de compilação: ``'catch' without 'try'``;
+  ```java
+  try{
+    anyMethod();
+  }finally {
+    System.out.println("run finally");
+  }
+  catch (RuntimeException e){ // ❌ Não compila! Um catch não pode vir após um 'finally'. 'finally' deve ser a última declaração da estrutura. Err: 'catch' without 'try'
+    System.out.println("never get here");
+  }
+  ```
+- Múltiplos métodos ``catch`` DEVEM aparecer na ordem por exceções diferentes, ou da menor hierarquia para a maior.
+  ```java
+  try{
+    anyMethod();
+  } catch (Exception e){ // superclass Exception
+    System.out.println(e.getMessage());
+  }
+  catch (RuntimeException e){ // subclass Exception ❌ Não compila! Primeiro deve vir a subclasse e posteriormente a superclass. Err: Exception 'java.lang.RuntimeException' has already been caught
+    System.out.println("never get here");
+  }
+  ```
+
+**Exemplo de Sintaxe:**
+```java
+try {
+  // código que inclui comandos/invocações de métodos
+  // que podem gerar uma situação de exceção.
+} catch (XException ex) {
+  // bloco de tratamento associado à condição de
+  // exceção XException ou a qualquer uma de suas
+  // subclasses, identificada aqui pelo objeto
+  // com referência ex
+} catch (YException ey) {
+  // bloco de tratamento para a situação de exceção
+  // YException ou a qualquer uma de suas subclasses
+} finally {
+  // bloco de código que sempre será executado após
+  // o bloco try, independentemente de sua conclusão
+  // ter ocorrido normalmente ou ter sido interrompida
+}
+```
+**Exemplo com ``try-catch`` aninhado:**
+```java
+public class ExceptionTest {
+    public static void main(String[] args) throws RuntimeException{
+        String nullString = null;
+        try{
+            try{
+                System.out.println("before the NullPointException appears");
+                nullString.length();
+                System.out.println("after the NullPointException appears");
+            }catch(NullPointerException ex){
+                System.out.println("first catch (NullPointer)");
+                throw new RuntimeException("Unchecked Exception");
+            }finally {
+                System.out.println("first finally (NullPointer)");
+                throw new Exception("Checked Exception"); // ⚠️ A exception lançada no 'finally' toma prioridade sobre a exception lançada no 'catch', sendo ela considerada.
+            }
+        }catch (Exception e){
+            System.out.println("second catch (Exception from finally) - " + e.getMessage());
+        }
+        System.out.println("after second catch");
+        /* Output:
+            before the NullPointException appears
+            first catch (NullPointer)
+            first finally (NullPointer)
+            second catch (Exception from finally) - Checked Exception
+            after second catch
+        */
+    }
+}
+```
+#### 5.1.1 Multicach
+A partir do Java 7.0, é possível que um único bloco catch capture múltiplas exceções separando cada uma com ``|`` (símbolo de pipe) no bloco catch.
+Capturar múltiplas exceções em um único bloco catch reduz a duplicação de código e aumenta a eficiência.
+Regras:
+- Quando estamos usando multi-catch, não é permitido especificar duas ou mais exceções da mesma hierarquia na instrução multi-catch.
+  ```java
+  try {
+    // anyCode
+  } catch (RuntimeException | NullPointerException ex) { // ❌ Não compila! Null pointer é filho de Runtime, e por ser da mesma herança, o java ocasiona um erro de compilação. Err: Types in multi-catch must be disjoint: 'java.lang.NullPointerException' is a subclass of 'java.lang.RuntimeException'
+    // anyCode
+  }
+  ```
+  ✅ Modo correto:
+  ```java
+  try {
+    // anyCode
+  } catch (ArithmeticException | NullPointerException ex) { // ✅ Compila corretamente, nenhuma classe herda de outra, ambas herdam de Runtime e são diferentes.
+    // anyCode
+  }
+  ```
+- Se um bloco catch tratar múltiplas exceções, o parâmetro catch será implicitamente final. Isso significa que não podemos atribuir nenhum valor aos parâmetros catch.
+  ```java
+    public class ExceptionTest {
+
+        public static void main(String[] args){
+            try{
+                System.out.println(args[0]);
+            }catch (NullPointerException | IndexOutOfBoundsException e){
+                if(e instanceof NullPointerException){
+                    e = new NullPointerException("NullPointer"); // ❌ Não Compila! Err: Cannot assign a value to final variable 'e'
+                }else if(e instanceof IndexOutOfBoundsException){
+                    e = new ArrayIndexOutOfBoundsException("Out of bounds");  // ❌ Não Compila! Err: Cannot assign a value to final variable 'e'
+                }
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+  ```
+
+---
+### 5.2 Runtime Exceptions cobradas - (*Unchecked Exceptions*)
+Existe uma lista de RuntimeExceptions cobradas para certificação Java 8. 
+São elas:
+- ***ArithmeticException*** é uma exceção em Java que é lançada quando ocorre um erro aritmético durante a execução de um programa. Isso normalmente acontece quando há uma operação matemática inválida, como uma divisão por zero.
+  ```java
+  public class ExemploArithmeticException {
+    public static void main(String[] args) {
+        int numerador = 10;
+        int denominador = 0;
+        
+        try {
+            int resultado = numerador / denominador; // Tentando dividir por zero
+            System.out.println("O resultado da divisão é: " + resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("Ocorreu uma exceção aritmética: " + e.getMessage());
+        }
+    }
+  }
+  ```
+- ***ArrayIndexOutOfBoundsException*** é uma exceção em Java que é lançada quando ocorre uma tentativa de acesso a um índice inválido em um array. Isso acontece quando você tenta acessar um elemento em um array usando um índice que está fora dos limites válidos do array.
+  ```java
+  public class ExemploArrayIndexOutOfBoundsException {
+      public static void main(String[] args) {
+          int[] array = {1, 2, 3, 4, 5};
+          
+          try {
+              int valor = array[10]; // Tentando acessar um índice inválido
+              System.out.println("O valor no índice 10 é: " + valor);
+          } catch (ArrayIndexOutOfBoundsException e) {
+              System.out.println("Ocorreu uma exceção de índice de array: " + e.getMessage());
+          }
+      }
+  }
+  ```
+- ***ClassCastException*** é uma exceção em Java que é lançada quando ocorre uma tentativa de converter (fazer o cast) um objeto para um tipo que não é compatível com o tipo real do objeto. Essa exceção ocorre quando há uma incompatibilidade de tipos durante a conversão, geralmente em um contexto de herança ou interfaces. Esse erro ocorre em downcasting, quando geralmente há uma tentativa de casting de um super-tipo cujo a referência e a instância é diferente do tipo filho, ou de tipos completamentes diferentes, como ilustrado no segundo exemplo.
+  ```java
+  public class ExemploClassCastException {
+    public static void main(String[] args) {
+        Object objeto = "Isso é uma string";
+        
+        try {
+            Integer numero = (Integer) objeto; // Tentando fazer o cast de uma String para um Integer
+            System.out.println("O número é: " + numero);
+        } catch (ClassCastException e) {
+            System.out.println("Ocorreu uma exceção de cast de classe: " + e.getMessage());
+        }
+    }
+  }
+  ```
+  outro exemplo mais claro:
+    ```java
+  class Animal { 
+    public void fazBarulho() {
+        System.out.println("silêncio");
+    }
+  }
+
+  class Dog extends Animal { 
+      public void fazBarulho() {
+          System.out.println("au au");
+      }
+  }
+
+  class Cat extends Animal { 
+      public void fazBarulho() {
+          System.out.println("miau");
+      }
+  }
+
+  class Ideone {
+      public static void main(String[] args) {
+          Dog dog = new Dog();      
+          Animal animal = new Animal();
+          Animal animal2 = new Dog();
+          Animal animal3 = new Cat();
+          dog.fazBarulho();
+          animal.fazBarulho();
+          animal2.fazBarulho(); //concretamente é um cachorro
+          animal3.fazBarulho(); //concretamente é um gato
+          System.out.println("-- Castings agora --");
+          ((Animal)dog).fazBarulho(); //upcasting
+          ((Dog)animal2).fazBarulho(); //downcasting, funciona
+          ((Dog)animal3).fazBarulho(); //downcasting, dá erro porque um gato não é um cachorro
+          ((Dog)animal).fazBarulho(); //downcasting, dá erro aqui
+      }
+  }
+  ```
+- ***IllegalArgumentException*** é uma exceção em Java que é lançada quando um método recebe um argumento inválido. Essa exceção é frequentemente usada para indicar que os argumentos fornecidos a um método não estão dentro dos valores aceitáveis ou não são válidos para a operação em questão.
+  ```java
+  public class ExemploIllegalArgumentException {
+    public static void main(String[] args) {
+        int idade = -5; // Idade inválida, deve ser um número positivo
+        
+        try {
+            if (idade < 0) {
+                throw new IllegalArgumentException("Idade não pode ser negativa.");
+            }
+            System.out.println("Idade: " + idade);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ocorreu uma IllegalArgumentException: " + e.getMessage());
+        }
+    }
+  }
+  ```
+  A exceção ``IllegalArgumentException`` em Java não é lançada automaticamente por métodos padrão da linguagem, como é o caso de ``NullPointerException`` ou ``ArithmeticException``, que são geradas automaticamente em situações específicas. Em vez disso, ``IllegalArgumentException`` é geralmente lançada explicitamente pelo programador, quando ele deseja indicar que um argumento passado para um método é inválido.
+  Isso significa que você não encontrará métodos nativos da linguagem Java que lançam ``IllegalArgumentException`` como parte de seu comportamento normal. Essa exceção é usada para sinalizar problemas relacionados a argumentos inválidos em métodos personalizados que você escreve ou em bibliotecas de terceiros.
+- ***NullPointerException*** é uma exceção em Java que ocorre quando você tenta acessar ou chamar um método em um objeto que não foi inicializado, ou seja, quando a referência para o objeto é ``null``. Isso ocorre quando você tenta acessar as propriedades ou chamar métodos em uma variável de referência que não aponta para um objeto válido.
+  ```java
+  public class ExemploNullPointerException {
+    public static void main(String[] args) {
+        String texto = null; // Inicializando uma referência de String como null
+        
+        try {
+            int comprimento = texto.length(); // Tentando acessar a propriedade "length" em uma String nula
+            System.out.println("Comprimento do texto: " + comprimento);
+        } catch (NullPointerException e) {
+            System.out.println("Ocorreu uma NullPointerException: " + e.getMessage());
+        }
+    }
+  }
+  ```
+- ***NumberFormatException*** é uma exceção em Java que é lançada quando ocorre um erro ao tentar converter uma ``String`` em um número (por exemplo, ``int``, ``double``, etc.) e a ``String`` não é um formato válido para o tipo de número desejado.
+  ```java
+  public class ExemploNumberFormatException {
+    public static void main(String[] args) {
+        String numeroString = "abc123"; // Uma string que não é um número válido
+        
+        try {
+            int numero = Integer.parseInt(numeroString); // Tentando converter a string em um número inteiro
+            System.out.println("Número: " + numero);
+        } catch (NumberFormatException e) {
+            System.out.println("Ocorreu uma NumberFormatException: " + e.getMessage());
+        }
+    }
+  }
+  ```
+---
+### 5.2 Exceptions cobradas - (*Checked Exceptions*)
+Existe uma lista de RuntimeExceptions cobradas para certificação Java 8. 
+São elas:
+
+- ***IOException*** IOException é uma classe em Java que faz parte do pacote java.io e é usada para lidar com exceções relacionadas a operações de entrada e saída de dados (I/O). Ela é uma subclasse de Exception e é usada para capturar erros que podem ocorrer ao realizar operações de E/S, como leitura ou escrita de arquivos, manipulação de streams, conexões de rede, etc.
+  ```java
+  import java.io.*;
+
+  public class IOExceptionExample {
+      public static void main(String[] args) {
+          try {
+              // Tentando abrir um arquivo que não existe
+              FileInputStream fileInputStream = new FileInputStream("arquivo_inexistente.txt");
+
+              // Tentando ler dados do arquivo
+              int data = fileInputStream.read();
+              while (data != -1) {
+                  System.out.print((char) data);
+                  data = fileInputStream.read();
+              }
+
+              // Fechando o arquivo
+              fileInputStream.close();
+          } catch (IOException e) {
+              System.err.println("Ocorreu uma IOException: " + e.getMessage());
+              e.printStackTrace();
+          }
+      }
+  }
+  ```
+- ***FileNotFoundException*** é uma exceção lançada em linguagens de programação, como Java, quando um programa tenta abrir ou acessar um arquivo, mas o arquivo especificado não pode ser encontrado no sistema de arquivos. Essa exceção indica que o programa não conseguiu localizar o arquivo que estava tentando manipular. Ela é uma subclasse da exceção ``IOException``
+  ```java
+  import java.io.File;
+  import java.io.FileNotFoundException;
+  import java.io.FileReader;
+
+  public class FileNotFoundExceptionExample {
+      public static void main(String[] args) {
+          try {
+              // Tenta abrir um arquivo que não existe
+              File file = new File("arquivo_que_nao_existe.txt");
+              FileReader reader = new FileReader(file);
+          } catch (FileNotFoundException e) {
+              System.out.println("O arquivo não pôde ser encontrado.");
+              e.printStackTrace();
+          } catch (Exception e) {
+              System.out.println("Ocorreu uma exceção diferente: " + e.getMessage());
+          }
+      }
+  }
+  ```
+
+
+---
+## 6 Manipulação de arquivos
+---
+### 6.1 A classe java.io.File
+A classe ``java.io.File`` está presente desde o JDK 1.0 e oferece uma abstração de arquivo como sendo um recurso, escondendo detalhes de funcionamento do sistema operacional. Uma instância de File tem a função de apontar para um arquivo ou diretório no sistema de arquivos e disponibiliza vários comandos para manipular o recurso referenciado.
+Seus construtores são listados a seguir:
+- **File(*File parent, String child*):** Cria um novo objeto File com o caminho indicado por parent concatenado ao valor de child. Não é necessário que o arquivo ou diretório apontado exista;
+
+- **File(*String pathname*):** Cria uma nova instância de File usando uma String com o caminho até o recurso;
+
+- **File(*String parent, String child*):** Cria um novo objeto File com o caminho indicado por parent concatenado ao valor de child. Não é necessário que o arquivo ou diretório apontado exista;
+
+- **File(*URI uri*):** Recebe como parâmetro o caminho para um recurso (URI), que pode ser um arquivo, diretório ou outro recurso local ou remoto.
+
+*Nota: Uma URI é um caminho para um recurso local ou remoto que tem um nome. A sua forma geral pode ser definida pela seguinte expressão: [scheme:]content[#fragment].
