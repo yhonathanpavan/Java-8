@@ -447,7 +447,7 @@ Sendo assim, existe uma classe Wrapper para cada tipo primitivo identificado pel
 Todas as WrapperClasses apresentadas (com exceção do ``Character``) possuem métodos de conversão de ``String`` para tipo primitivo e *WrapperClass*. São Eles:
 - **``Type.parseType("...")``** Converte a string para um tipo primitivo, onde a palavra `Type` deve ser substituida pelo tipo desejado. Exemplo: ``int myPrimitiveInt = Integer.parseInt("1");``
 - **``Type.valueOf("...")``** Converte a string para um tipo *Wrapper*, onde a palavra `Type` deve ser substituida pelo tipo desejado. Exemplo: ``Integer myWrapperInt = Integer.valueOf("1");``
-- **``Type.decode("...")``** Assim como o ``valueOf()`` o método ``decode()`` Converte a string para um tipo *Wrapper*, onde a palavra `Type` deve ser substituida pelo tipo desejado. A sia principal diferença, é que o tipo decode() usa Strings **decimais**, **hexadecimais** ou **octais** (prefixados por ``0x``, ou ``0``) Exemplo: ``Integer myWrapperInt = Integer.valueOf("0xf"); // Amazenará o valor 16 como Integer``
+- **``Type.decode("...")``** Assim como o ``valueOf()`` o método ``decode()`` Converte a string para um tipo *Wrapper*, onde a palavra `Type` deve ser substituida pelo tipo desejado. A sua principal diferença, é que o tipo decode() usa Strings **decimais**, **hexadecimais** ou **octais** (prefixados por ``0x``, ou ``0``) Exemplo: ``Integer myWrapperInt = Integer.valueOf("0xf"); // Amazenará o valor 16 como Integer``
 ---
 
 ### 1.2 Classes x Arquivos
@@ -714,6 +714,10 @@ Exemplo com o byte, ele tem 8 bits, portanto 2⁸ = 256. Dividindo 256 pela meta
 |  long   | 64 bits | -9,223,372,036,854,775,808 até 9,223,372,036,854,775,807 com terminação em "L" |   100L ou 100l   |
 |  float  | 32 bits |                  até 7 dígitos decimais com terminação em "F"                  | 10.30F ou 10.30f |
 | double  | 64 bits |                 até 16 dígitos decimais com terminação em "D"                  | 24.25D ou 24.25d |
+
+**Os objetos possuem os atributos estáticos BYTE e SIZE:**
+- **SIZE:** O número de bits usados para representar o objeto. (Exemplo, Double tem 64 bits, portanto seu SIZE == 64).
+- **BYTE:** Podemos encontrar pela divisão do número do SIZE(bytes) dividido por 8 (porque 1 byte é 8 bits). (Exemplo, Double tem 64 bits, na divisão por 8 bits isso resultaria 8 BYTES). (0, 1, 2, 4, 8, 16, 32, 64).****
 
 #### 1.7.1 Uso do underline ( _ ) para melhorar a leitura de números
 A partir do Java 7, foi adicionado o suporte ao o uso do uderline ( _ ) na atribuição de variáveis que armazenam tipos númericos. 
@@ -1570,6 +1574,8 @@ O Java, por padrão, possui uma série de recursos prontos (*APIs*) para que pos
 tratar de estrutura de dados, também chamados de coleções (*collections*).
 Podemos dizer que ``ArrayList`` é uma classe para coleções, a qual você pode realizar várias operações, como: adicionar e retirar elementos, ordenálos, procurar por um elemento específico, apagar um elemento específico, limpar o ArrayList, etc. 
 
+**Curiosidade: ArrayList possui um tamanho inicial de capacidade 10.**
+
 #### 3.5.1 Formas de declarar um ArrayList:
 ```java
   //Declarando com um tipo específico
@@ -1649,6 +1655,8 @@ O Java 8 reconheceu a diferença tipos de uso de data e hora e definiu classes d
 **Nenhuma das três classes podem ser instânciadas com o uso da palavra reservada** ``new``. Isso ocorre porque essas classes possuem construtores privados, portanto, o único meio de instânciá-las é com o uso de seus métodos próprios, como por exemplo ``LocalDateTime.now()`` que retorna uma instância referente à data e horário atual.
 
 #### 3.6.1 Tabela de métodos permitidos em cada tipo
+Ao usar cada um dos seguintes métodos, é necessário refazer uma atribuição. 
+Isso é, os métodos a seguir não influenciam diretamente na referência do objeto.
 | Método()                               | LocalDate? | LocalTime? | LocalDateTime? |
 |:---------------------------------------|:----------:|:----------:|:--------------:|
 | ``plusYears()`` & ``minusYears()``     |     ✅     |     ❌    |      ✅       |
@@ -2103,7 +2111,7 @@ Pode ocorrer um problema de conversão dupla (ocasionado pela fé de que o Java 
 ### 4.4 Sobrescrita de Métodos (*override*)
 A sobrescrita (ou *override*) está diretamente relacionada à orientação a objetos, mais especificamente com a herança. Com a sobrescrita, conseguimos especializar os métodos herdados das superclasses, alterando o seu comportamento nas subclasses por um mais específico.
 Se atente às regras:
-- **Os métodos das classes pai e filha devem ter a mesma assinatura (tipo, nome e parâmetros)**
+- **Os métodos das classes pai e filha devem ter a mesma assinatura (tipo do retorno, nome e parâmetros)**
   Exemplo:
   ```java
   class A {
@@ -2113,7 +2121,7 @@ Se atente às regras:
   }
 
   class B extends A {
-      public double calc(int a, int b) { // ❌ Não compila! 'calc(double, double)' in 'B' clashes with 'calc(double, double)' in 'A'; attempting to use incompatible return type
+      public double calc(int a, int b) { // ❌ Não compila! 'calc(int, int)' in 'B' clashes with 'calc(int, int)' in 'A'; attempting to use incompatible return type
           return a + b;
       }
 
@@ -2810,7 +2818,7 @@ Regras:
 ### 5.2 Runtime Exceptions cobradas - (*Unchecked Exceptions*)
 Existe uma lista de RuntimeExceptions cobradas para certificação Java 8. 
 São elas:
-- ***ArithmeticException*** é uma exceção em Java que é lançada quando ocorre um erro aritmético durante a execução de um programa. Isso normalmente acontece quando há uma operação matemática inválida, como uma divisão por zero.
+- ***ArithmeticException*** é uma exceção em Java que é lançada quando ocorre um erro aritmético durante a execução de um programa. Isso normalmente acontece quando há uma operação matemática inválida, como uma divisão por zero. (**Exceto para números flutuantes, isso esse cenário retonaria NaN**)
   ```java
   public class ExemploArithmeticException {
     public static void main(String[] args) {
